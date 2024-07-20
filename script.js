@@ -151,7 +151,5 @@ async function scene_25_35() {
             const selectedYear = this.value;
             renderBars(data.filter(d => d.Year === selectedYear));
         });
-    }).catch(error => {
-        console.error("Error loading or processing data:", error); // Check for errors
-    });
+    })
 }
