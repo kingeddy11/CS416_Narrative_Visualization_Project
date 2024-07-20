@@ -24,7 +24,7 @@ async function scene_25_35() {
         .range(['#bf212f', '#264b96']);
 
     //tooltip
-    var tooltip = d3.select("#chart")
+    var tooltip = d3.select("#body")
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip");
