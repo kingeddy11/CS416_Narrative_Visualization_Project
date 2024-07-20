@@ -109,7 +109,7 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2 + 30)
+            .attr("x", -height / 2 + 20)
             .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
