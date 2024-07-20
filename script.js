@@ -39,7 +39,7 @@ async function scene_25_35() {
     // Legend for amount of education completed
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${width + margin.right - 100}, 0)`);
+        .attr("transform", `translate(${width + margin.right - 140}, 0)`);
 
     legend.selectAll("rect")
         .data(subgroups)
@@ -109,7 +109,7 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2 + 20)
+            .attr("x", -height / 2 + 30)
             .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
