@@ -109,10 +109,10 @@ async function scene_25_35() {
         // Function to render bars
         const renderBars = (filteredData) => {
             const bars = svg.selectAll("g.bars")
-                .data(filteredData, d => d.group)
+                .data(filteredData, d => d.groups)
                 .join(enter => enter.append("g")
                     .attr("class", "bars")
-                    .attr("transform", d => `translate(${x(d.group)},0)`)
+                    .attr("transform", d => `translate(${x(d.groups)},0)`)
                     .selectAll("rect")
                     .data(d => subgroups.map(key => ({ key, value: d[key] })))
                     .enter().append("rect")
