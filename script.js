@@ -72,6 +72,8 @@ async function scene_25_35() {
 
     // Loading data
     data = await d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
+        //filtering for Age_Group = Population 25 to 34 years
+        var new_data = data.filter(d => d.Age_Group === "Population 25 to 34 years")
 
         // X axis and X axis label
         var x = d3.scaleBand()
@@ -151,12 +153,12 @@ async function scene_25_35() {
         };
 
         // Initial render for 2022
-        renderBars(data.filter(d => d.Year === "2022"));
+        renderBars(new_data.filter(d => d.Year === "2022"));
 
         // Event listener for radio button change
         d3.selectAll('input[name="select"]').on('change', function () {
             const selectedYear = this.value;
-            renderBars(data.filter(d => d.Year === selectedYear));
+            renderBars(new_data.filter(d => d.Year === selectedYear));
         });
     })
 }
