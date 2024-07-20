@@ -1,6 +1,5 @@
 // Setting margins
 const margin = { top: 30, right: 40, bottom: 30, left: 40 };
-
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
@@ -42,7 +41,7 @@ async function scene_25_35() {
         .attr("y", (d, i) => i * 20)
         .attr("width", 18)
         .attr("height", 18)
-        .attr("fill", d => color(d));
+        .attr("fill", function (d) { return color(d); });
 
     legend.selectAll("text")
         .data(subgroups)
@@ -64,21 +63,15 @@ async function scene_25_35() {
         .text("Educational Attainment for Population 25 to 34 years old");
 
     // Loading data
-    data = await d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
-
-        // Parse percentages as numbers
-        data.forEach(d => {
-            d.High_school_grad_or_higher_pct = +d.High_school_grad_or_higher_pct;
-            d.Bachelors_or_higher_pct = +d.Bachelors_or_higher_pct;
-        });
-
-        console.log("Loaded Data:", data);  // Debugging line
+    d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
+        console.log("Loaded Data:", data); // Check data loading
 
         // X axis and X axis label
         var x = d3.scaleBand()
             .domain(groups)
             .range([0, width])
             .padding([0.2]);
+
         svg.append("g")
             .attr("class", "x_axis")
             .attr("transform", "translate(0," + height + ")")
@@ -101,6 +94,7 @@ async function scene_25_35() {
         var y = d3.scaleLinear()
             .domain([0, 100])
             .range([height, 0]);
+
         svg.append("g")
             .attr("class", "y_axis")
             .call(d3.axisLeft(y));
@@ -113,48 +107,41 @@ async function scene_25_35() {
             .style("text-anchor", "middle")
             .text("Percentage of Population");
 
-        // Rendering bars based on Year
+        // Render bars based on Year
         const renderBars = (filteredData) => {
-            console.log("Filtered Data:", filteredData);  // Debugging line
+            console.log("Filtered Data:", filteredData); // Check data filtering
+
+            svg.selectAll("g.bars").remove(); // Clear previous bars
 
             const bars = svg.selectAll("g.bars")
-                .data(filteredData, d => d.Region)  // Use `Region` for data binding
-                .join(enter => enter.append("g")
-                    .attr("class", "bars")
-                    .attr("transform", d => `translate(${x(d.Region)},0)`)
-                    .selectAll("rect")
-                    .data(d => subgroups.map(key => ({ key, value: d[key] })))
-                    .enter().append("rect")
-                    .attr("x", d => xsubgroup(d.key))
-                    .attr("y", d => y(d.value))
-                    .attr("width", xsubgroup.bandwidth())
-                    .attr("height", d => height - y(d.value))
-                    .attr("fill", d => color(d.key))
-                    .on("mouseover", (event, d) => {
-                        tooltip.transition()
-                            .duration(200)
-                            .style("opacity", 1);
-                        tooltip.html(`<b>Region:</b> ${d.Region}
-                                      <br><b>Amount of Education Completed:</b> ${d.key}
-                                      <br><b>Percent of Population:</b> ${d.value}`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
-                    })
-                    .on("mouseout", () => {
-                        tooltip.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    }),
-                    update => update
-                        .transition()
-                        .duration(2000)
-                        .attr("x", d => xsubgroup(d.key))
-                        .attr("y", d => y(d.value))
-                        .attr("width", xsubgroup.bandwidth())
-                        .attr("height", d => height - y(d.value))
-                        .attr("fill", d => color(d.key)),
-                    exit => exit.remove()
-                );
+                .data(filteredData, d => d.Region)
+                .enter().append("g")
+                .attr("class", "bars")
+                .attr("transform", d => `translate(${x(d.Region)},0)`);
+
+            bars.selectAll("rect")
+                .data(d => subgroups.map(key => ({ key, value: d[key] })))
+                .enter().append("rect")
+                .attr("x", d => xsubgroup(d.key))
+                .attr("y", d => y(d.value))
+                .attr("width", xsubgroup.bandwidth())
+                .attr("height", d => height - y(d.value))
+                .attr("fill", d => color(d.key))
+                .on("mouseover", (event, d) => {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", 1);
+                    tooltip.html(`<b>Region:</b> ${d.Region}
+                                  <br><b>Amount of Education Completed:</b> ${d.key}
+                                  <br><b>Percent of Population:</b> ${d.value}`)
+                        .style("left", `${event.pageX + 10}px`)
+                        .style("top", `${event.pageY - 10}px`);
+                })
+                .on("mouseout", () => {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
         };
 
         // Initial render for 2022
@@ -165,5 +152,7 @@ async function scene_25_35() {
             const selectedYear = this.value;
             renderBars(data.filter(d => d.Year === selectedYear));
         });
+    }).catch(error => {
+        console.error("Error loading or processing data:", error); // Check for errors
     });
 }
