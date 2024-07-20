@@ -1,5 +1,5 @@
 // Setting margins
-const margin = { top: 30, right: 40, bottom: 60, left: 80 };
+const margin = { top: 30, right: 40, bottom: 80, left: 100 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
@@ -17,6 +17,13 @@ async function scene_25_35() {
     // Defining groups and subgroups for side-by-side bar chart x-axis
     var subgroups = ["High_school_grad_or_higher_pct", "Bachelors_or_higher_pct"];
     var groups = ['United States', 'California', 'Pasadena'];
+    var legendNames = ["High School Grad or Higher", "Bachelor's Degree or Higher"]
+
+    // Create a mapping from subgroups to legend names
+    var legendMapping = {
+        "High_school_grad_or_higher_pct": "High School Grad or Higher",
+        "Bachelors_or_higher_pct": "Bachelor's Degree or Higher"
+    };
 
     // Color palette
     var color = d3.scaleOrdinal()
@@ -32,7 +39,7 @@ async function scene_25_35() {
     // Legend for amount of education completed
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${width - 100}, 0)`);
+        .attr("transform", `translate(${width - 140}, 0)`);
 
     legend.selectAll("rect")
         .data(subgroups)
@@ -45,7 +52,7 @@ async function scene_25_35() {
         .attr("fill", function (d) { return color(d); });
 
     legend.selectAll("text")
-        .data(subgroups)
+        .data(legendNames)
         .enter()
         .append("text")
         .attr("x", 25)
@@ -103,7 +110,7 @@ async function scene_25_35() {
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
             .attr("x", -height / 2 - 10)
-            .attr("y", -margin.left + 20)
+            .attr("y", -margin.left + 40)
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
 
@@ -131,7 +138,7 @@ async function scene_25_35() {
                         .duration(200)
                         .style("opacity", 1);
                     tooltip.html(`<b>Region:</b> ${d.region}
-                                  <br><b>Amount of Education Completed:</b> ${d.key}
+                                  <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
                                   <br><b>Percent of Population:</b> ${d.value}`)
                         .style("left", `${event.pageX + 10}px`)
                         .style("top", `${event.pageY - 10}px`);
