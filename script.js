@@ -1,5 +1,5 @@
 // Setting margins
-const margin = { top: 30, right: 40, bottom: 80, left: 100 };
+const margin = { top: 30, right: 40, bottom: 70, left: 80 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
@@ -39,7 +39,7 @@ async function scene_25_35() {
     // Legend for amount of education completed
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${width - 140}, 0)`);
+        .attr("transform", `translate(${width - 100}, 0)`);
 
     legend.selectAll("rect")
         .data(subgroups)
@@ -87,7 +87,7 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "x_axis_label")
             .attr("x", width / 2)
-            .attr("y", height + margin.bottom + 10)
+            .attr("y", height + margin.bottom - 20)
             .style("text-anchor", "middle")
             .text("Region");
 
@@ -110,7 +110,7 @@ async function scene_25_35() {
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
             .attr("x", -height / 2 - 10)
-            .attr("y", -margin.left + 40)
+            .attr("y", -margin.left + 30)
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
 
