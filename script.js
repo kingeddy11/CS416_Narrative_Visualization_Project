@@ -4,6 +4,7 @@ const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
 async function scene_25_35() {
+
     // SVG object
     var svg = d3
         .select("#chart")
@@ -31,7 +32,7 @@ async function scene_25_35() {
     // Legend for amount of education completed
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${width - 150}, 0)`);
+        .attr("transform", `translate(${width - 100}, 0)`);
 
     legend.selectAll("rect")
         .data(subgroups)
@@ -79,7 +80,7 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "x_axis_label")
             .attr("x", width / 2)
-            .attr("y", height + margin.bottom - 10)
+            .attr("y", height + margin.bottom + 10)
             .style("text-anchor", "middle")
             .text("Region");
 
@@ -101,14 +102,13 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2)
+            .attr("x", -height / 2 - 20)
             .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
             .text("Percentage of Population");
 
         // Render bars based on Year
         const renderBars = (filteredData) => {
-            console.log("Filtered Data:", filteredData); // Check data filtering
 
             svg.selectAll("g.bars").remove(); // Clear previous bars
 
@@ -119,7 +119,7 @@ async function scene_25_35() {
                 .attr("transform", d => `translate(${x(d.Region)},0)`);
 
             bars.selectAll("rect")
-                .data(d => subgroups.map(key => ({ key, value: d[key] })))
+                .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
                 .enter().append("rect")
                 .attr("x", d => xsubgroup(d.key))
                 .attr("y", d => y(d.value))
@@ -130,7 +130,7 @@ async function scene_25_35() {
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", 1);
-                    tooltip.html(`<b>Region:</b> ${d.Region}
+                    tooltip.html(`<b>Region:</b> ${d.region}
                                   <br><b>Amount of Education Completed:</b> ${d.key}
                                   <br><b>Percent of Population:</b> ${d.value}`)
                         .style("left", `${event.pageX + 10}px`)
