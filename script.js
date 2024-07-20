@@ -24,7 +24,7 @@ async function scene_25_35() {
         .range(['#bf212f', '#264b96']);
 
     //tooltip
-    var tooltip = d3.select("#body")
+    var tooltip = d3.select("body")
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip");
@@ -153,7 +153,7 @@ async function scene_25_35() {
         renderBars(data.filter(d => d.Year === "2022"));
 
         // Event listener for radio button change
-        d3.selectAll('input[name="year"]').on('change', function () {
+        d3.selectAll('input[name="select"]').on('change', function () {
             const selectedYear = this.value;
             renderBars(data.filter(d => d.Year === selectedYear));
         });
