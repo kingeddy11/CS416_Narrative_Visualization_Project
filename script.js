@@ -63,8 +63,7 @@ async function scene_25_35() {
         .text("Educational Attainment for Population 25 to 34 years old");
 
     // Loading data
-    d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
-        console.log("Loaded Data:", data); // Check data loading
+    data = await d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
 
         // X axis and X axis label
         var x = d3.scaleBand()
