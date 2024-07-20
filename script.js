@@ -128,7 +128,7 @@ async function scene_25_34() {
                 .attr("class", "bars")
                 .attr("transform", d => `translate(${x(d.Region)},0)`);
 
-            transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip); // Call the transition function
+            transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip);
         };
 
         // Initially display for 2022
@@ -169,18 +169,18 @@ function transitionBars(bars, xsubgroup, y, height, color, legendMapping, toolti
                         .style("opacity", 0);
                 })
                 .call(enter => enter.transition()
-                    .duration(1000)
+                    .duration(2000)
                     .attr("y", d => y(d.value))
                     .attr("height", d => height - y(d.value))), // Transition to new height
             update => update.call(update => update.transition()
-                .duration(1000)
+                .duration(2000)
                 .attr("x", d => xsubgroup(d.key))
                 .attr("y", d => y(d.value))
                 .attr("height", d => height - y(d.value))
                 .attr("width", xsubgroup.bandwidth())
                 .attr("fill", d => color(d.key))),
             exit => exit.call(exit => exit.transition()
-                .duration(1000)
+                .duration(2000)
                 .attr("y", height)
                 .attr("height", 0)
                 .remove())
