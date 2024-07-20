@@ -110,7 +110,7 @@ async function scene_25_35() {
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
             .attr("x", -height / 2 - 10)
-            .attr("y", -margin.left + 30)
+            .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
 
