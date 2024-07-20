@@ -1,5 +1,5 @@
 // Setting margins
-const margin = { top: 30, right: 40, bottom: 30, left: 40 };
+const margin = { top: 30, right: 40, bottom: 60, left: 80 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
@@ -102,10 +102,10 @@ async function scene_25_35() {
         svg.append("text")
             .attr("class", "y_axis_label")
             .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2 - 20)
+            .attr("x", -height / 2 - 10)
             .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
-            .text("Percentage of Population");
+            .text("Percentage of Population (in percent)");
 
         // Render bars based on Year
         const renderBars = (filteredData) => {
