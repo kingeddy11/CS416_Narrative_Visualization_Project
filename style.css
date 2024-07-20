@@ -1,0 +1,117 @@
+.button1 {
+    color: #000000;
+    background-color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+.button1:hover {
+    color: #ffffff;
+    background-color: #ff0000;
+}
+
+.button1:active {
+    color: #ffffff;
+    background-color: #ff0000;
+    transform: translateY(5px);
+}
+
+.button2 {
+    color: #000000;
+    background-color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #008000;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+.button2:hover {
+    color: #ffffff;
+    background-color: #008000;
+}
+
+.button2:active {
+    color: #ffffff;
+    background-color: #008000;
+    transform: translateY(5px);
+}
+
+.button3 {
+    color: #000000;
+    background-color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #0000ff;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+.button3:hover {
+    color: #ffffff;
+    background-color: #0000ff;
+}
+
+.button3:active {
+    color: #ffffff;
+    background-color: #0000ff;
+    transform: translateY(5px);
+}
+
+.button4 {
+    color: #000000;
+    background-color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #ffa500;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+.button4:hover {
+    color: #ffffff;
+    background-color: #ffa500;
+}
+
+.button4:active {
+    color: #ffffff;
+    background-color: #ffa500;
+    transform: translateY(5px);
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: #cccccc;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    opacity: 1;
+    pointer-events: none;
+}

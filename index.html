@@ -9,15 +9,38 @@
     <title>Narrative Visualization</title>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://github.com/susielu/d3-annotation/blob/master/d3-annotation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <main>
-        <h1>Welcome to My Website</h1>
-    </main>
+<body onload="scene_25_35()">
+    <h1>Educational Attainment in the US, California, Pasadena (CA) by Age Demographic</h1>
+    <div id="scene">
+        <h2>Choose Age Demographic</h2>
+        <a href="index.html" class="button1">25 to 34 years Old</a>
+        <a href="Age_Group_35_44.html" class="button2">35 to 44 Years Old</a>
+        <a href="Age_Group_45_64.html" class="button3">45 to 64 Years Old</a>
+        <a href="Age_Group_Over_65.html" class="button4">65 Years Old and Over</a>
+    </div>
+
+    <div id="chart">
+        <p>Please select between displaying the Percent Share of Total Population or the Population Count</p>
+        <form>
+            <input type="radio" name="select" checked>2022
+            <input type="radio" name="select">2021
+        </form>
+    </div>
+
+    <p>Note: The numbers come from the ACS 1-year estimate subject tables rather than the 5-year estimate subject
+        tables.</p>
+    <p>Source: <a
+            href="https://data.census.gov/table/ACSST1Y2021.S1501?q=Educational%20Attainment&g=010XX00US_040XX00US06_160XX00US0656000">2021:
+            ACS 1-Year Estimates S1501 Educational Attainment</a>
+        <a
+            href="https://data.census.gov/table/ACSST1Y2022.S1501?q=Educational%20Attainment&g=010XX00US_040XX00US06_160XX00US0656000">2022:
+            ACS 1-Year Estimates S1501 Educational Attainment</a>
+    </p>
 </body>
 
 </html>
