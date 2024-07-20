@@ -1,11 +1,11 @@
-//setting margins
-const margin = { top: 30, right: 40, bottom: 30, left: 40 }
+// Setting margins
+const margin = { top: 30, right: 40, bottom: 30, left: 40 };
 
-const width = 800 - margin.left - margin.right
-const height = 500 - margin.top - margin.bottom
+const width = 800 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
 
 async function scene_25_35() {
-    //svg object
+    // SVG object
     var svg = d3
         .select("#chart")
         .append("svg")
@@ -14,22 +14,22 @@ async function scene_25_35() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    //defining groups and subgroups for side by side bar chart x-axis
+    // Defining groups and subgroups for side-by-side bar chart x-axis
     var subgroups = ["High_school_grad_or_higher_pct", "Bachelors_or_higher_pct"];
     var groups = ['United States', 'California', 'Pasadena'];
 
-    //color palette
+    // Color palette
     var color = d3.scaleOrdinal()
         .domain(subgroups)
         .range(['#bf212f', '#264b96']);
 
-    //tooltip
+    // Tooltip
     var tooltip = d3.select("body")
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip");
 
-    //legend for amount of education completed
+    // Legend for amount of education completed
     var legend = svg.append("g")
         .attr("class", "legend")
         .attr("transform", `translate(${width - 150}, 0)`);
@@ -42,7 +42,7 @@ async function scene_25_35() {
         .attr("y", (d, i) => i * 20)
         .attr("width", 18)
         .attr("height", 18)
-        .attr("fill", function (d) { return color(d); });
+        .attr("fill", d => color(d));
 
     legend.selectAll("text")
         .data(subgroups)
@@ -51,9 +51,9 @@ async function scene_25_35() {
         .attr("x", 25)
         .attr("y", (d, i) => i * 20 + 15)
         .text(d => d)
-        .style("font-size", "12px")
+        .style("font-size", "12px");
 
-    //chart title
+    // Chart title
     svg.append("text")
         .attr("class", "chart_title")
         .attr("x", width / 2)
@@ -63,10 +63,18 @@ async function scene_25_35() {
         .attr("font-weight", "bold")
         .text("Educational Attainment for Population 25 to 34 years old");
 
-    // loading data
+    // Loading data
     data = await d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
 
-        //x axis and x axis label
+        // Parse percentages as numbers
+        data.forEach(d => {
+            d.High_school_grad_or_higher_pct = +d.High_school_grad_or_higher_pct;
+            d.Bachelors_or_higher_pct = +d.Bachelors_or_higher_pct;
+        });
+
+        console.log("Loaded Data:", data);  // Debugging line
+
+        // X axis and X axis label
         var x = d3.scaleBand()
             .domain(groups)
             .range([0, width])
@@ -83,13 +91,13 @@ async function scene_25_35() {
             .style("text-anchor", "middle")
             .text("Region");
 
-        //x axis for subgroups
+        // X axis for subgroups
         var xsubgroup = d3.scaleBand()
             .domain(subgroups)
             .range([0, x.bandwidth()])
             .padding([0.05]);
 
-        //y axis and y axis label
+        // Y axis and Y axis label
         var y = d3.scaleLinear()
             .domain([0, 100])
             .range([height, 0]);
@@ -105,14 +113,15 @@ async function scene_25_35() {
             .style("text-anchor", "middle")
             .text("Percentage of Population");
 
-        //rendering bars based on Year
-        // Function to render bars
+        // Rendering bars based on Year
         const renderBars = (filteredData) => {
+            console.log("Filtered Data:", filteredData);  // Debugging line
+
             const bars = svg.selectAll("g.bars")
-                .data(filteredData, d => d.groups)
+                .data(filteredData, d => d.Region)  // Use `Region` for data binding
                 .join(enter => enter.append("g")
                     .attr("class", "bars")
-                    .attr("transform", d => `translate(${x(d.groups)},0)`)
+                    .attr("transform", d => `translate(${x(d.Region)},0)`)
                     .selectAll("rect")
                     .data(d => subgroups.map(key => ({ key, value: d[key] })))
                     .enter().append("rect")
@@ -127,8 +136,7 @@ async function scene_25_35() {
                             .style("opacity", 1);
                         tooltip.html(`<b>Region:</b> ${d.Region}
                                       <br><b>Amount of Education Completed:</b> ${d.key}
-                                      <br><b>Percent of Population:</b> ${d.value}
-                                      <br><b>Total Population:</b> ${d.Total}`)
+                                      <br><b>Percent of Population:</b> ${d.value}`)
                             .style("left", `${event.pageX + 10}px`)
                             .style("top", `${event.pageY - 10}px`);
                     })
