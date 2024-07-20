@@ -3,7 +3,8 @@ const margin = { top: 70, right: 100, bottom: 70, left: 80 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-async function scene_25_35() {
+// Loading Scene for 25 to 
+async function scene_25_34() {
 
     // SVG object
     var svg = d3
@@ -116,8 +117,8 @@ async function scene_25_35() {
             .style("text-anchor", "middle")
             .text("Percentage of Population (in percent)");
 
-        // Render bars based on Year
-        const renderBars = (filteredData) => {
+        // Display bars based on Year with transition
+        const displayBars = (filteredData) => {
 
             svg.selectAll("g.bars").remove(); // Clear previous bars
 
@@ -127,21 +128,38 @@ async function scene_25_35() {
                 .attr("class", "bars")
                 .attr("transform", d => `translate(${x(d.Region)},0)`);
 
-            bars.selectAll("rect")
-                .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
-                .enter().append("rect")
+            transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip); // Call the transition function
+        };
+
+        // Initially display for 2022
+        displayBars(new_data.filter(d => d.Year === "2022"));
+
+        // Event listener for radio button change
+        d3.selectAll('input[name="select"]').on('change', function () {
+            const selectedYear = this.value;
+            displayBars(new_data.filter(d => d.Year === selectedYear));
+        });
+    })
+}
+
+// Transition function
+function transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip) {
+    bars.selectAll("rect")
+        .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
+        .join(
+            enter => enter.append("rect")
                 .attr("x", d => xsubgroup(d.key))
-                .attr("y", d => y(d.value))
+                .attr("y", height) // Start from bottom
                 .attr("width", xsubgroup.bandwidth())
-                .attr("height", d => height - y(d.value))
+                .attr("height", 0) // Initial height is 0
                 .attr("fill", d => color(d.key))
                 .on("mouseover", (event, d) => {
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", 1);
                     tooltip.html(`<b>Region:</b> ${d.region}
-                            <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
-                            <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`) // Format as percentage
+                                  <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
+                                  <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`)
                         .style("left", `${event.pageX + 10}px`)
                         .style("top", `${event.pageY - 10}px`);
                 })
@@ -149,16 +167,22 @@ async function scene_25_35() {
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
-                });
-        };
-
-        // Initial render for 2022
-        renderBars(new_data.filter(d => d.Year === "2022"));
-
-        // Event listener for radio button change
-        d3.selectAll('input[name="select"]').on('change', function () {
-            const selectedYear = this.value;
-            renderBars(new_data.filter(d => d.Year === selectedYear));
-        });
-    })
+                })
+                .call(enter => enter.transition()
+                    .duration(1000)
+                    .attr("y", d => y(d.value))
+                    .attr("height", d => height - y(d.value))), // Transition to new height
+            update => update.call(update => update.transition()
+                .duration(1000)
+                .attr("x", d => xsubgroup(d.key))
+                .attr("y", d => y(d.value))
+                .attr("height", d => height - y(d.value))
+                .attr("width", xsubgroup.bandwidth())
+                .attr("fill", d => color(d.key))),
+            exit => exit.call(exit => exit.transition()
+                .duration(1000)
+                .attr("y", height)
+                .attr("height", 0)
+                .remove())
+        );
 }
