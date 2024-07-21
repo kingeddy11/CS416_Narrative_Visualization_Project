@@ -3,7 +3,6 @@ const margin = { top: 70, right: 100, bottom: 70, left: 80 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-// Loading Scene for 25 to 
 async function scene_25_34() {
 
     // SVG object
@@ -119,16 +118,45 @@ async function scene_25_34() {
 
         // Display bars based on Year with transition
         const displayBars = (filteredData) => {
-
-            svg.selectAll("g.bars").remove(); // Clear previous bars
-
             const bars = svg.selectAll("g.bars")
-                .data(filteredData, d => d.Region)
-                .enter().append("g")
+                .data(filteredData, d => d.Region);
+
+            bars.exit().remove(); // Remove bars not in the current selection
+
+            const barsEnter = bars.enter().append("g")
                 .attr("class", "bars")
                 .attr("transform", d => `translate(${x(d.Region)},0)`);
 
-            transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip);
+            barsEnter.selectAll("rect")
+                .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
+                .enter().append("rect")
+                .attr("x", d => xsubgroup(d.key))
+                .attr("y", height) // Start from bottom
+                .attr("width", xsubgroup.bandwidth())
+                .attr("height", 0) // Start with height 0
+                .attr("fill", d => color(d.key))
+                .on("mouseover", (event, d) => {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", 1);
+                    tooltip.html(`<b>Region:</b> ${d.region}
+                            <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
+                            <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`) // Format as percentage
+                        .style("left", `${event.pageX + 10}px`)
+                        .style("top", `${event.pageY - 10}px`);
+                })
+                .on("mouseout", () => {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+            // Transition for updating existing bars
+            barsEnter.merge(bars).selectAll("rect")
+                .transition()
+                .duration(1000)
+                .attr("y", d => y(d.value))
+                .attr("height", d => height - y(d.value));
         };
 
         // Initially display for 2022
@@ -140,49 +168,4 @@ async function scene_25_34() {
             displayBars(new_data.filter(d => d.Year === selectedYear));
         });
     })
-}
-
-// Transition function
-function transitionBars(bars, xsubgroup, y, height, color, legendMapping, tooltip) {
-    bars.selectAll("rect")
-        .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
-        .join(
-            enter => enter.append("rect")
-                .attr("x", d => xsubgroup(d.key))
-                .attr("y", height) // Start from bottom
-                .attr("width", xsubgroup.bandwidth())
-                .attr("height", 0) // Initial height is 0
-                .attr("fill", d => color(d.key))
-                .on("mouseover", (event, d) => {
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", 1);
-                    tooltip.html(`<b>Region:</b> ${d.region}
-                                  <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
-                                  <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`)
-                        .style("left", `${event.pageX + 10}px`)
-                        .style("top", `${event.pageY - 10}px`);
-                })
-                .on("mouseout", () => {
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                })
-                .call(enter => enter.transition()
-                    .duration(2000)
-                    .attr("y", d => y(d.value))
-                    .attr("height", d => height - y(d.value))), // Transition to new height
-            update => update.call(update => update.transition()
-                .duration(2000)
-                .attr("x", d => xsubgroup(d.key))
-                .attr("y", d => y(d.value))
-                .attr("height", d => height - y(d.value))
-                .attr("width", xsubgroup.bandwidth())
-                .attr("fill", d => color(d.key))),
-            exit => exit.call(exit => exit.transition()
-                .duration(2000)
-                .attr("y", height)
-                .attr("height", 0)
-                .remove())
-        );
 }
