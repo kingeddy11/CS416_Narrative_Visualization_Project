@@ -158,7 +158,7 @@ async function scene_25_34() {
                     .style("opacity", 1);
                 tooltip.html(`<b>Region:</b> ${d.region}
                         <br><b>Amount of Education Completed:</b> ${legendMapping[d.key]}
-                        <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`) // Format as percentage
+                        <br><b>Percent of Population:</b> ${d.value.toFixed(2)}%`)
                     .style("left", `${event.pageX + 10}px`)
                     .style("top", `${event.pageY - 10}px`);
             })
