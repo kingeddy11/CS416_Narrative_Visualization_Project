@@ -171,16 +171,19 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
     margin: 4px 2px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .buttonNext:hover {
     color: #ffffff;
     background-color: rgb(34, 79, 152);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .buttonNext:active {
     color: #ffffff;
     background-color: rgb(34, 79, 152);
     transform: translateY(5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
