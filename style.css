@@ -160,6 +160,24 @@ body {
     transform: translateY(5px);
 }
 
+/* Adding pulse to Next button */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        transform: scale(1.05);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        transform: scale(1);
+    }
+}
+
 .buttonNext {
     color: #ffffff;
     background-color: #2e83ab;
@@ -173,17 +191,18 @@ body {
     margin: 4px 2px;
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    animation: pulse 2s infinite;
 }
 
 .buttonNext:hover {
     color: #ffffff;
     background-color: rgb(34, 79, 152);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    animation: none;
 }
 
 .buttonNext:active {
     color: #ffffff;
     background-color: rgb(34, 79, 152);
     transform: translateY(5px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    animation: none;
 }
