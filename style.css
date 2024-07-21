@@ -129,3 +129,7 @@ body {
     opacity: 1;
     pointer-events: none;
 }
+
+.dim {
+    opacity: 0.3;
+}
