@@ -117,7 +117,7 @@ async function scene_25_34() {
         .text("Percentage of Population (in percent)");
 
     // Variable to keep track of whether a bar is currently selected
-    let highlightedbar = null;
+    let clickedbar = null;
 
     // Function to display bars
     var displayBars = (filteredData) => {
@@ -168,18 +168,18 @@ async function scene_25_34() {
                     .style("opacity", 0);
             })
             .on("click", (event, d) => {
-                if (highlightedbar === d.key) {
+                if (clickedbar === d.key) {
                     // If bar already highlighted, remove highlight and reset bars
                     svg.selectAll("rect").classed("dim", false);
                     legend.selectAll("rect").classed("dim", false);
-                    highlightedbar = null;
+                    clickedbar = null;
                 } else {
                     // Dim the unclicked bars and legend while keeping selected bar same color
                     svg.selectAll("rect").classed("dim", true);
                     svg.selectAll(`rect[fill='${color(d.key)}']`).classed("dim", false);
                     legend.selectAll("rect").classed("dim", true);
                     legend.select(`rect[fill='${color(d.key)}']`).classed("dim", false);
-                    highlightedbar = d.key;
+                    clickedbar = d.key;
                 }
             });
     };
