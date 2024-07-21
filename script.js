@@ -72,7 +72,7 @@ async function scene_25_34() {
 
     // Loading data
     data = await d3.csv("2021_2022_ACS_Educational_Attainment_data.csv").then(function (data) {
-        //filtering for Age_Group = Population 25 to 34 years
+        // Filtering for Age_Group = Population 25 to 34 years
         var new_data = data.filter(d => d.Age_Group === "Population 25 to 34 years")
 
         // X axis and X axis label
@@ -127,14 +127,28 @@ async function scene_25_34() {
                 .attr("class", "bars")
                 .attr("transform", d => `translate(${x(d.Region)},0)`);
 
-            barsEnter.selectAll("rect")
+            barsEnter.merge(bars).selectAll("rect")
                 .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
-                .enter().append("rect")
-                .attr("x", d => xsubgroup(d.key))
-                .attr("y", height) // Start from bottom
-                .attr("width", xsubgroup.bandwidth())
-                .attr("height", 0) // Start with height 0
-                .attr("fill", d => color(d.key))
+                .join(
+                    enter => enter.append("rect")
+                        .attr("x", d => xsubgroup(d.key))
+                        .attr("y", height) // Start from bottom
+                        .attr("width", xsubgroup.bandwidth())
+                        .attr("height", 0) // Start with height 0
+                        .attr("fill", d => color(d.key))
+                        .call(enter => enter.transition().duration(1000)
+                            .attr("y", d => y(d.value))
+                            .attr("height", d => height - y(d.value))),
+                    update => update
+                        .call(update => update.transition().duration(1000)
+                            .attr("y", d => y(d.value))
+                            .attr("height", d => height - y(d.value))),
+                    exit => exit
+                        .call(exit => exit.transition().duration(1000)
+                            .attr("height", 0)
+                            .attr("y", height)
+                            .remove())
+                )
                 .on("mouseover", (event, d) => {
                     tooltip.transition()
                         .duration(200)
@@ -150,13 +164,6 @@ async function scene_25_34() {
                         .duration(500)
                         .style("opacity", 0);
                 });
-
-            // Transition for updating existing bars
-            barsEnter.merge(bars).selectAll("rect")
-                .transition()
-                .duration(1000)
-                .attr("y", d => y(d.value))
-                .attr("height", d => height - y(d.value));
         };
 
         // Initially display for 2022
