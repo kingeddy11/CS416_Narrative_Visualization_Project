@@ -133,3 +133,55 @@ body {
 .dim {
     opacity: 0.3;
 }
+
+.buttonBack {
+    color: #ffffff;
+    background-color: #2e83ab;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition: background-color 0.25s;
+    transition-duration: 0.4s;
+}
+
+.buttonBack:hover {
+    color: #ffffff;
+    background-color: rgb(34, 79, 152);
+}
+
+.buttonBack:active {
+    color: #ffffff;
+    background-color: rgb(34, 79, 152);
+    transform: translateY(5px);
+}
+
+.buttonNext {
+    color: #ffffff;
+    background-color: #2e83ab;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 4px 2px;
+    transition: background-color 0.25s;
+    transition-duration: 0.4s;
+}
+
+.buttonNext:hover {
+    color: #ffffff;
+    background-color: rgb(34, 79, 152);
+}
+
+.buttonNext:active {
+    color: #ffffff;
+    background-color: rgb(34, 79, 152);
+    transform: translateY(5px);
+}
