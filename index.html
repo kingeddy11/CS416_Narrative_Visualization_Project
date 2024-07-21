@@ -15,62 +15,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload="scene_25_34()">
+<body>
     <h1>Educational Attainment in the US, California, Pasadena (CA) by Age Demographic</h1>
 
-    <div>
-        <p style="text-align: left;">
+    <div id="beginScene">
+        <p>
             This interactive visualization compares educational attainment in the United States, California, and
             Pasadena (CA). More specifically, we analyze the percentage of the population in each region with at least a
             high school diploma and the percentage of the population with at least a bachelor's degree across four
-            different age groups. Additionally, you can choose between examining educational attainment in 2022 and 2021
-            for these regions. We would like to observe whether Pasadena has a higher educational attainment level
-            compared to statewide and nationwide levels.
+            different age groups. We would like to observe whether Pasadena has a higher educational attainment level
+            compared to statewide and nationwide levels. Additionally, observe how educational attainment has changed
+            between 2022 and 2021 and compare educational attainment between different age groups.
         </p>
-    </div>
-
-    <div id="scene">
-        <h3>Select an Age Demographic you would like to explore:</h3>
-        <a href="index.html" class="button1">25 to 34 years Old</a>
-        <a href="Age_Group_35_44.html" class="button2">35 to 44 Years Old</a>
-        <a href="Age_Group_45_64.html" class="button3">45 to 64 Years Old</a>
-        <a href="Age_Group_65_Over.html" class="button4">65 Years Old and Over</a>
-    </div>
-
-    <div id="chart">
-        <p>Please select displaying educational attainment in 2022 or 2021</p>
-        <form>
-            <input type="radio" name="select" value="2022" checked>2022
-            <input type="radio" name="select" value="2021">2021
-        </form>
         <p>
-            To see only one category (High School Grad or Higher, Bachelor's Degree or Higher), click on any bar that is
-            <br>
-            the color of the category you would like to select. Click again to reset bars if a category is already
-            selected.
+            Please click <B>Begin</B> to start exploring this interative visualization
         </p>
     </div>
 
-    <p>Note: The red bar represents the percentage of the population in a region with at least a high school
-        diploma.<br>
-        The blue bar represents the percentage of the population in a region with at least a Bachelore's Degree or
-        higher. <br>
-        The numbers come from the ACS 1-year estimate subject tables rather than the 5-year estimate subject tables.
-    </p>
-    <p>2022 Data Source: <a
-            href="https://data.census.gov/table/ACSST1Y2022.S1501?q=Educational%20Attainment&g=010XX00US_040XX00US06_160XX00US0656000">2022:
-            ACS 1-Year Estimates S1501 Educational Attainment</a>
-    </p>
-    <p>2021 Data Source: <a
-            href="https://data.census.gov/table/ACSST1Y2021.S1501?q=Educational%20Attainment&g=010XX00US_040XX00US06_160XX00US0656000">2021:
-            ACS 1-Year Estimates S1501 Educational Attainment</a>
-    </p>
-    <p>
-        Slide 1/4
-    </p>
-    <div id="navigateButton"
-        style="position: fixed; bottom: 10px; width: 80%; display: flex; justify-content: flex-end; padding: 0 10%; margin: 0 auto;">
-        <a href="Age_Group_35_44.html" class="buttonNext">Next</a>
+    <div id="navigateButton">
+        <a href="Age_Group_25_34.html" class="buttonNext">Begin</a>
     </div>
 </body>
 

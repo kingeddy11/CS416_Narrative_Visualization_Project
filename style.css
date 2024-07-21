@@ -12,6 +12,12 @@ body {
     padding: 20px;
 }
 
+#beginScene {
+    font-size: 1.2em;
+    width: 75%;
+    margin: 0 auto;
+}
+
 .button1 {
     color: #000000;
     background-color: #ffffff;
