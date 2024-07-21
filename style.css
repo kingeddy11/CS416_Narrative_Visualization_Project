@@ -118,7 +118,7 @@ body {
 
 .tooltip {
     position: absolute;
-    text-align: center;
+    text-align: left;
     width: auto;
     height: auto;
     padding: 5px;
