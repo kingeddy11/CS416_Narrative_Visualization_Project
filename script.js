@@ -172,14 +172,14 @@ async function scene_25_34() {
                     // If bar already highlighted, remove highlight and reset bars
                     svg.selectAll("rect").classed("dim", false);
                     legend.selectAll("rect").classed("dim", false);
-                    clickedKey = null;
+                    highlightedbar = null;
                 } else {
                     // Dim the unclicked bars and legend 
                     svg.selectAll("rect").classed("dim", true);
                     svg.selectAll(`rect[fill='${color(d.key)}']`).classed("dim", false);
                     legend.selectAll("rect").classed("dim", true);
                     legend.select(`rect[fill='${color(d.key)}']`).classed("dim", false);
-                    clickedKey = d.key;
+                    highlightedbar = d.key;
                 }
             });
     };
