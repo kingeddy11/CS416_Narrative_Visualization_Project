@@ -121,7 +121,7 @@ async function scene_25_34() {
             const bars = svg.selectAll("g.bars")
                 .data(filteredData, d => d.Region);
 
-            bars.exit().remove(); // Remove bars not in the current selection
+            bars.exit().remove();
 
             const barsEnter = bars.enter().append("g")
                 .attr("class", "bars")
@@ -132,9 +132,9 @@ async function scene_25_34() {
                 .join(
                     enter => enter.append("rect")
                         .attr("x", d => xsubgroup(d.key))
-                        .attr("y", height) // Start from bottom
+                        .attr("y", height)
                         .attr("width", xsubgroup.bandwidth())
-                        .attr("height", 0) // Start with height 0
+                        .attr("height", 0)
                         .attr("fill", d => color(d.key))
                         .call(enter => enter.transition().duration(1000)
                             .attr("y", d => y(d.value))
