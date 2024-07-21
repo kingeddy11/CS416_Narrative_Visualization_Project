@@ -174,7 +174,7 @@ async function scene_25_34() {
                     legend.selectAll("rect").classed("dim", false);
                     highlightedbar = null;
                 } else {
-                    // Dim the unclicked bars and legend 
+                    // Dim the unclicked bars and legend while keeping selected bar same color
                     svg.selectAll("rect").classed("dim", true);
                     svg.selectAll(`rect[fill='${color(d.key)}']`).classed("dim", false);
                     legend.selectAll("rect").classed("dim", true);
