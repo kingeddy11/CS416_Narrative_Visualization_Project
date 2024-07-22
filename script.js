@@ -183,6 +183,29 @@ async function scene_25_34() {
                     clickedbar = d.key;
                 }
             });
+
+        // Add data labels
+        barsEnter.merge(bars).selectAll("text")
+            .data(d => subgroups.map(key => ({ key, value: +d[key], region: d.Region })))
+            .join(
+                enter => enter.append("text")
+                    .attr("x", d => xsubgroup(d.key) + xsubgroup.bandwidth() / 2)
+                    .attr("y", d => y(d.value) - 5)
+                    .attr("text-anchor", "middle")
+                    .text(d => `${d.value}%`)
+                    .style("font-size", "12px")
+                    .style("opacity", 0)
+                    .call(enter => enter.transition().duration(1000)
+                        .style("opacity", 1)),
+                update => update
+                    .call(update => update.transition().duration(1000)
+                        .attr("y", d => y(d.value) - 5)
+                        .text(d => `${d.value}%`)),
+                exit => exit
+                    .call(exit => exit.transition().duration(1000)
+                        .style("opacity", 0)
+                        .remove())
+            );
     };
 
     // Initially display for 2022
